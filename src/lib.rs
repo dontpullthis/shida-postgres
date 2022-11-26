@@ -7,16 +7,14 @@ mod globals;
 
 use shida_core::module::Module;
 
-use crate::funcs::can_handle::can_handle;
-use crate::funcs::init_reader::init_reader;
-use crate::funcs::init_writer::init_writer;
-use crate::funcs::read::read;
-
+use crate::funcs::{apply_schema, can_handle, get_schema, init_reader, init_writer, read};
 
 #[no_mangle]
 fn load() -> Module {
     Module {
+        apply_schema,
         can_handle,
+        get_schema,
         init_reader,
         init_writer,
         read,
