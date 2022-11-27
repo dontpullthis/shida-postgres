@@ -1,11 +1,11 @@
 use shida_core::ffi::casting;
 use shida_core::ffi::typedefs;
-use shida_core::ffi::schema::LevelE;
+use shida_core::ffi::schema::LevelD;
 
 
 use crate::globals;
 
-pub fn apply_schema(_level_e: LevelE) -> typedefs::ConstCCharPtr {
+pub fn apply_schema(_level_d: LevelD) -> typedefs::ConstCCharPtr {
     let lock = globals::GLOBALS.lock().unwrap();
     let writer_context = lock.writer_context.as_ref().unwrap();
     let log = &(writer_context.app_config).functions.log;
