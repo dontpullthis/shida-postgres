@@ -4,6 +4,7 @@ extern crate lazy_static;
 mod context;
 mod funcs;
 mod globals;
+mod types;
 
 use shida_core::module::Module;
 
