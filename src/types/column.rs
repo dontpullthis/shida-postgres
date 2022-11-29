@@ -1,7 +1,7 @@
 use std::fmt;
 
 use shida_core::ffi::casting;
-use shida_core::ffi::schema::LevelA;
+use shida_core::ffi::schema::{LevelA, LevelAType};
 
 #[derive(Clone)]
 pub enum ColumnType {
@@ -9,6 +9,17 @@ pub enum ColumnType {
     Int,
     Timestamp,
     Varchar,
+}
+
+impl From<LevelAType> for ColumnType {
+    fn from(level_a_type: LevelAType) -> Self {
+        match level_a_type {
+            LevelAType::Date => Self::Date,
+            LevelAType::Int => Self::Int,
+            LevelAType::Timestamp => Self::Timestamp,
+            LevelAType::Varchar => Self::Varchar,
+        }
+    }
 }
 
 impl From<String> for ColumnType {
@@ -20,6 +31,17 @@ impl From<String> for ColumnType {
             "varchar" => ColumnType::Varchar,
             _ => ColumnType::Varchar,
         }
+    }
+}
+
+impl Into<String> for ColumnType {
+    fn into(self) -> String {
+        match self {
+            Self::Date => "date",
+            Self::Int => "int",
+            Self::Timestamp => "timestamp",
+            Self::Varchar => "varchar",
+        }.to_string()
     }
 }
 
@@ -63,9 +85,10 @@ impl Into<LevelA> for Column {
 
 impl From<LevelA> for Column {
     fn from(level_a: LevelA) -> Column {
-        let table = Column::new(casting::ccharptr_to_string(level_a.name)
+        let mut column = Column::new(casting::ccharptr_to_string(level_a.name)
             .unwrap_or(String::from("")), ColumnType::Varchar); // TODO: replace the static type with calculated value
-        
-        table
+        column.column_type = level_a.level_type.into();
+
+        column
     }
 }

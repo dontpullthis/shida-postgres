@@ -1,7 +1,7 @@
 use shida_core::ffi::casting;
 use shida_core::ffi::schema::{LevelA, LevelB};
 
-use crate::types::{Column, ColumnType};
+use crate::types::Column;
 
 #[derive(Clone)]
 pub struct Table {
